@@ -1,0 +1,161 @@
+html
+    include includes/head
+    title Просмотр правки
+body
+if (session.admin || session.user)
+    .container
+        .row
+            .col-md-12
+                include includes/header  
+            .col-md-12
+                a(href='/main')
+                    | <-- На главную
+                br
+                br
+                h4
+                    | ID: #{result._id}
+                table.table    
+                    tr
+                        td 
+                            | дата добавления
+                        td #{result.add_date}    
+                        td             
+                    tr
+                        td Получатель
+                        td #{result.recipient}
+                        td
+                            form(action='/edit/recipient/#{result._id}', method='POST')
+                                select(name='recipient', class='recipient', style='display:none')
+                                    -for(var i=0; i<users.length; i++)
+                                        option #{users[i].username}
+                                br(class='recipient', style='display:none')
+                                button.btn.btn-default(type='input', class='recipient', style='display:none') Отправить
+                            a(onclick='recipient()', id='_recipient') редактировать
+                    tr
+                        td Источник
+                        td #{result.source_company}
+                        td
+                            form(action='/edit/source_company/#{result._id}', method='POST')
+                                input(type='text', name='source_company', class='source_company', style='display:none')
+                                br(class='source_company', style='display:none')
+                                button(type='input', class='source_company', style='display:none') Отправить
+                            a(onclick='source_company()', id='_source_company') редактировать
+                    tr
+                        td Страницы
+                        td #{result.page}
+                        td
+                            form(action='/edit/page/#{result._id}', method='POST')
+                                input(type='text', name='page', class='page', style='display:none')
+                                br(class='page', style='display:none')
+                                button(type='input', class='page', style='display:none') Отправить
+                            a(onclick='page()', id='_page') редактировать
+                    tr
+                        td Комментарий
+                        td #{result.comment}
+                        td
+                            form(action='/edit/comment/#{result._id}', method='POST')
+                                //textarea(name='message', rows='8', cols='80', placeholder='Ваше сообщение')
+                                textarea(rows='8', cols='40', name='comment', class='comment', style='display:none')
+                                br(class='comment', style='display:none')
+                                button(type='input', class='comment', style='display:none') Отправить
+                            a(onclick='comment()', id='_comment') редактировать
+                    tr
+                        td 
+                            a(href='/img#{result.screen}', target='_blank')
+                                img(src='/img#{result.screen}', height='200px')
+                        td
+                        td
+                            form(action='/edit/screen/#{result._id}', method='POST', enctype='multipart/form-data')
+                                input(type='file', name='screen', class='screen', style='display:none')
+                                br(class='screen', style='display:none')
+                                button(type='input', class='screen', style='display:none') Отправить
+                            a(onclick='screen()', id='_screen') редактировать
+                    tr  
+                        td Дата реагирования                 
+                        td #{result.accept_date}
+                        td
+                    tr
+                        td Статус
+                        td 
+                            if(result.status==0)
+                                | На рассмотрении
+                            if(result.status==1)
+                                | Внесена
+                            if(result.status==2)
+                                | Не внесена
+                        td
+                            form(action='/edit/status/#{result._id}', method='POST')
+                                select(name='status', class='status', style='display:none')
+                                    option На рассмотрении
+                                    option Внесена
+                                    option Не внесена
+                                br(class='status', style='display:none')
+                                button(type='input', class='status', style='display:none') Отправить
+                            a(onclick='status()', id='_status') редактировать
+            .col-md-8
+                hr
+                if(session.admin)
+                    h3
+                        | Диалог с получателем
+                else
+                    h3
+                        | Диалог с отправителем
+                br
+                br
+                -for(var i=0; i<result.chat.length; i++)
+                    -if(session.admin)
+                        -if(session.admin.name == result.chat[i].author)
+                            p(style='background: #F5DEB3')
+                                b 
+                                    | #{result.chat[i].author},  #{result.chat[i].date}
+                                br    
+                                | #{result.chat[i].message}  
+                                hr
+                        -else
+                            p(style='background:#F0F5E5')
+                                b 
+                                    | #{result.chat[i].author},  #{result.chat[i].date}
+                                br    
+                                | #{result.chat[i].message}  
+                                hr
+                    -if(session.user)
+                        -if(session.user.name == result.chat[i].author)
+                            p(style='background:#F5DEB3')
+                                b 
+                                    | #{result.chat[i].author},  #{result.chat[i].date}
+                                br    
+                                | #{result.chat[i].message}  
+                                hr
+                        -else
+                            p(style='background:#F0F5E5')
+                                b 
+                                    | #{result.chat[i].author},  #{result.chat[i].date}
+                                br    
+                                | #{result.chat[i].message}  
+                                hr
+                form(method='POST', action='/chat/add/#{result._id}')
+                    textarea(name='message', rows='8', cols='80', placeholder='Ваше сообщение')
+                    br
+                    button.btn.btn-default(type='input') Отправить   
+            .col-md-4
+                hr 
+                h3
+                    | История изменений 
+                -for(var i=result.logs.length-1; i>=0; i--) 
+                    if(result.logs[i].message=='Комментарий')
+                        p
+                            | Комментарий: 
+                            a(href='/edit/#{result._id}/#{result.logs[i]._id}', target='_blank') ссылка
+                            |, Изменил: #{result.logs[i].author}, Дата: #{result.logs[i].date}
+                        br
+                    if(result.logs[i].message=='Скриншот')
+                        p
+                            | Скриншот: 
+                            a(href='/img#{result.logs[i].subject}', target='_blank') ссылка
+                            |, Изменил: #{result.logs[i].author}, Дата: #{result.logs[i].date}
+                        br 
+                    if(result.logs[i].message!='Комментарий' && result.logs[i].message!='Скриншот')                        
+                        p
+                            | #{result.logs[i].message}
+                        br
+    script(src='/js/editFront.js')

@@ -1,0 +1,14 @@
+h3 Login
+form(method='post', action='/user/login')
+    input(type='text', name='username')
+    input(type='password', name='password')
+    input(type='submit')
+
+h3 Logout
+a(href='/logout') logout
+br
+
+if (user.user)
+    | test user
+if (user.admin)
+    | test admin

@@ -1,0 +1,30 @@
+html
+    include includes/head
+    title Добавление правки
+body
+if (session.admin)
+    .container
+        .row
+            .col-md-12
+                include includes/header  
+            .col-md-12
+                a(href='/main')
+                    | <-- На главную
+                br
+                br
+                form(method='post', action='/edit/add', enctype='multipart/form-data')
+                    | Получатель 
+                    select(name='recipient')
+                        -for(var i=0; i<users.length; i++)
+                            option #{users[i].username}
+                    br
+                    input(type='text', name='source_company', placeholder='Источник')
+                    br
+                    input(type='text', name='page', placeholder='Страницы')
+                    br
+                    textarea(name='comment', rows='8', cols='80', placeholder='Фрагмент текста')
+                    br
+                    input(type='text', name='chat', placeholder='Комментарий')
+                    br
+                    input(type='file', name='screen')                 
+                    input(type='submit')
