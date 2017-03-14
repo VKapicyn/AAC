@@ -3,11 +3,11 @@
         .col-md-5
             .ul.hr
                 li Внесены 
-                    a(href='#') #{vneseni}
+                    a(href='#' onclick='vneseni()') #{vneseni}
                 li Не внесены 
-                    a(href='#') #{ne_vneseni}
+                    a(href='#' onclick='ne_vneseni()') #{ne_vneseni}
                 li На рассмотрении 
-                    a(href='#') #{rassmotrenie}
+                    a(href='#' onclick='rassmotrenie()') #{rassmotrenie}
         .col-md-2
             if (session.admin)
                 .p

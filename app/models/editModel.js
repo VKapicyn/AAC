@@ -5,7 +5,7 @@ var editSchema = new mongoose.Schema({
     recipient: String,
     add_date: mongoose.Schema.Types.Date,
     source_company: String,
-    page: Number,
+    page: String,
     comment: String,
     screen: String,
     accept_date: mongoose.Schema.Types.Date,
@@ -13,6 +13,7 @@ var editSchema = new mongoose.Schema({
     chat: [{
         author: String,
         message: String,
+        screen: String,
         date: mongoose.Schema.Types.Date
     }],
     logs: [{

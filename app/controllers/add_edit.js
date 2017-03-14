@@ -2,6 +2,13 @@ var editModel = require('../models/editModel').editModel;
 var userModel = require('../models/userModel').userModel;
 var fs = require('../models/db-model').fs;
 var gfs = require('../models/db-model').gfs;
+var pass = require('../config.js').emailPass;
+var server 	= require('emailjs/email').server.connect({
+   user:    'reestr@da-strateg.ru', 
+   password: pass, 
+   host:    'smtp.beget.com',
+   ssl:     true
+});
 
 exports.editPage = function(req, res){
     if (req.session.admin)
@@ -47,6 +54,7 @@ exports.editAdd = function(req, res){
             let firstComment = {};
             firstComment.author = req.session.admin.name;
             firstComment.message = req.body.chat;
+            firstComment.sreen = 'none';
             firstComment.date = new Date();
         edit.chat.push(firstComment);
         
@@ -68,6 +76,17 @@ exports.editAdd = function(req, res){
             edit.screen = '/'+req.file.filename;
         }
         edit.save();
+        userModel.findOne({username: req.body.recipient}).then(function(result){
+            if(result.alerts == true)
+                server.send({
+                    text:    'Администратор ' + req.session.admin.name + ' отправил Вам задание ' + req.body.chat, 
+                    from: 'resstr',
+                    to:      result.email,
+                    subject: 'Новая правка'
+                }, function(err, message) { console.log(err || message); });
+            else   
+                console.log('оповещения отключены');
+        });
         res.redirect('/')
     }
     else

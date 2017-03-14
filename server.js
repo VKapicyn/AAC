@@ -46,7 +46,7 @@ app.post('/create/user', require('./app/controllers/auth').createUser);//
 app.post('/create/admin', require('./app/controllers/auth').createAdmin);//
 app.post('/user/login', require('./app/controllers/auth').login);//логинимся
 app.post('/edit/add', upload.single('screen'), require('./app/controllers/add_edit').editAdd)
-app.post('/chat/add/:id', require('./app/controllers/edit').editChat);//отправить сообщение в чат
+app.post('/chat/add/:id', upload.single('screen2'), require('./app/controllers/edit').editChat);//отправить сообщение в чат
 
 app.post('/edit/recipient/:id', require('./app/controllers/edit').editRecipient);
 app.post('/edit/source_company/:id', require('./app/controllers/edit').editSourceCompany);
@@ -57,6 +57,10 @@ app.post('/edit/status/:id', require('./app/controllers/edit').editStatus);
 
 app.get('/img/:filename', require('./app/controllers/db-files').getFile)
 app.get('/edit/:id/:subid', require('./app/controllers/db-files').getComment)
+
+//--------------------
+
+app.get('/search/:status/:source/:page/:sort/:amount', require('./app/controllers/rest').getSearch);
 
 app.listen(require('./app/config.js').port);
 console.log('Server started!');                                                                                                                                                              

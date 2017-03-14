@@ -13,7 +13,7 @@ html
     include includes/head
     title Главная
 body
-if (session.admin)
+if (session.admin || session.user)
      .container
         .row
             .col-md-12
@@ -21,169 +21,42 @@ if (session.admin)
             .col-md-3
                 .search-block
                     .input-append
-                        input(type='text', class='span2 search-query', placeholder='Источник')
+                        input(type='text', class='span2 search-query', placeholder='Источник', id='search-input')
                     br
-                    button.btn.btn-default Поиск
+                    button.btn.btn-default(onclick='getSearch()') Поиск
+                    | &nbsp &nbsp
+                    button.btn.btn-default(onclick='getDefault()') Сброс
                 br
-                form(action='/create')
+                //form(action='/create')
                     button.btn.btn-default.btn-mine Добавить пользователя
-                form(action='/add_edit')
-                    button.btn.btn-success.btn-mine Добавить правку
+                if (session.admin)
+                    form(action='/add_edit')
+                        button.btn.btn-success.btn-mine Добавить правку
+                    p 
+                        | Пояснения к статусу
             .col-md-9
                 table.table
                     thead.thead-inverse
                     tr
                         th #
-                        th Добавлена
+                        th 
+                            a(href='#' onclick='sortDate()') Добавлена
                         th Исполнитель
-                        th Источник
-                        th Страницы
+                        th 
+                            a(href='#' onclick='sortSource()') Источник
+                        th 
+                            a(href='#' onclick='sortPages()') Страницы
                         //th Комметарий
                         //th Скриншот
                         th Дата реагирования
                         th Статус
                         th Диалог
-                    tbody
-                        - for (var i=0; i<edit.length; i++)
-                            case (edit[i].status)
-                                when 0
-                                    tr.warning
-                                        th(scope='row') 
-                                            a(href='/edit/#{edit[i]._id}') #{i}
-                                            td #{edit[i].add_date}
-                                            td #{edit[i].recipient}
-                                            td #{edit[i].source_company}
-                                            td #{edit[i].page}
-                                            //td 
-                                                a(href='/edit/#{edit[i]._id}') октрыть
-                                            //td 
-                                                a(href='/img#{edit[i].screen}')
-                                                    img(src='/img#{edit[i].screen}', height='50px')
-                                                    
-                                            td #{edit[i].accept_date}
-                                            td 
-                                                | На рассмотрении
-                                            td #{edit[i].chat[edit[i].chat.length-1].message}
-                                when 1
-                                    tr.success
-                                        th(scope='row') 
-                                            a(href='/edit/#{edit[i]._id}') #{i}
-                                            td #{edit[i].add_date}
-                                            td #{edit[i].recipient}
-                                            td #{edit[i].source_company}
-                                            td #{edit[i].page}
-                                            //td 
-                                                a(href='/edit/#{edit[i]._id}') октрыть
-                                            //td 
-                                                a(href='/img#{edit[i].screen}')
-                                                    img(src='/img#{edit[i].screen}', height='50px')
-                                            td #{edit[i].accept_date}
-                                            td 
-                                                | Внесена
-                                            td #{edit[i].chat[edit[i].chat.length-1].message}
-                                when 2
-                                    tr.danger
-                                        th(scope='row')
-                                            a(href='/edit/#{edit[i]._id}') #{i}
-                                            td #{edit[i].add_date}
-                                            td #{edit[i].recipient}
-                                            td #{edit[i].source_company}
-                                            td #{edit[i].page}
-                                            //td 
-                                                a(href='/edit/#{edit[i]._id}') октрыть
-                                            //td 
-                                                a(href='/img#{edit[i].screen}')
-                                                    img(src='/img#{edit[i].screen}', height='50px')
-                                            td #{edit[i].accept_date}
-                                            td 
-                                                | Не внесена
-                                            td #{edit[i].chat[edit[i].chat.length-1].message}
-                                default
+                    tbody(id='sTable')
+                        
                                     tr
+                div(id='pagination')
                                 
-
-///-----------------------------------------------------------------------------                
-if (session.user)
-     .container
-        .row
-            .col-md-12
-                include includes/header       
-            .col-md-3
-                .search-block
-                    .input-append
-                        input(type='text',  placeholder='Источник')
-                    br
-                    button.btn.btn-default Поиск
-            .col-md-9
-                table.table
-                    thead.thead-inverse
-                    tr
-                        th #
-                        th Добавлена
-                        th Отправитель
-                        th Источник
-                        th Страницы
-                        //th Комметарий
-                        //th Скриншот
-                        th Дата реагирования
-                        th Статус
-                        th Диалог
-                    tbody
-                        - for (var i=0; i<edit.length; i++)
-                            case (edit[i].status)
-                                when 0
-                                    tr.warning
-                                        th(scope='row')
-                                            a(href='/edit/#{edit[i]._id}') #{i}
-                                            td #{edit[i].add_date}
-                                            td #{edit[i].sender}
-                                            td #{edit[i].source_company}
-                                            td #{edit[i].page}
-                                            //td 
-                                                a(href='/edit/#{edit[i]._id}') октрыть
-                                            //td 
-                                                a(href='/img#{edit[i].screen}')
-                                                    img(src='/img#{edit[i].screen}', height='50px')
-                                            td #{edit[i].accept_date}
-                                            td 
-                                                | На рассмотрении
-                                            td #{edit[i].chat[edit[i].chat.length-1].message}
-                                when 1
-                                    tr.success
-                                        th(scope='row')
-                                            a(href='/edit/#{edit[i]._id}') #{i}
-                                            td #{edit[i].add_date}
-                                            td #{edit[i].sender}
-                                            td #{edit[i].source_company}
-                                            td #{edit[i].page}
-                                            //td 
-                                                a(href='/edit/#{edit[i]._id}') октрыть
-                                            //td 
-                                                a(href='/img#{edit[i].screen}')
-                                                    img(src='/img#{edit[i].screen}', height='50px')
-                                            td #{edit[i].accept_date}
-                                            td 
-                                                | Внесена
-                                            td #{edit[i].chat[edit[i].chat.length-1].message}
-                                when 2
-                                    tr.danger
-                                        th(scope='row')
-                                            a(href='/edit/#{edit[i]._id}') #{i}
-                                            td #{edit[i].add_date}
-                                            td #{edit[i].sender}
-                                            td #{edit[i].source_company}
-                                            td #{edit[i].page}
-                                            //td 
-                                                a(href='/edit/#{edit[i]._id}') октрыть
-                                            //td 
-                                                a(href='/img#{edit[i].screen}')
-                                                    img(src='/img#{edit[i].screen}', height='50px')
-                                            td #{edit[i].accept_date}
-                                            td 
-                                                | Не внесена
-                                           td #{edit[i].chat[edit[i].chat.length-1].message}
-                                default
-                                    tr
+include includes/footer
                                 
 
 

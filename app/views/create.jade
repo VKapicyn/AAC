@@ -11,4 +11,16 @@ h3 Create user
 form(method='post', action='/create/user')
     input(type='text', name='username')
     input(type='password', name='password')
+    br
+    | Email
+    br
+    input(type='text', name='email')
+    br
+    | Включить оповещения
+    br
+    input(type='radio' name='alerts', value='false') 
+    |Нет
+    input(type='radio' name='alerts', value='true') 
+    |Да
+    br
     input(type='submit')

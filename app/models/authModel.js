@@ -11,7 +11,9 @@ var db = dbModel.db;
 exports.createUser = function(userData){
 	var user = {
 		username: userData.username,
-		password: userData.password
+		password: userData.password,
+        email: userData.email,
+        alerts: userData.alerts
 	}
 	return new User(user).save()
 }

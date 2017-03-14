@@ -31,6 +31,26 @@ exports.editChat = function(req, res){
             chat.message = req.body.message;
             chat.date = new Date();
 
+            if(req.file){
+                var writestream = gfs.createWriteStream({
+                    filename: req.file.filename
+                });
+
+                fs.createReadStream(req.file.path)
+                    .on('end', function(){fs.unlink(req.file.path, function(err){console.log('success')})})
+                    .on('err', function(){ console.log('Error uploading image')})
+                    .pipe(writestream);
+                
+                writestream.on('close', function (file){
+                    console.log(file.filename + ' Written To DB');
+                });
+
+                logger('Скриншот', result.screen, req, '/'+req.file.filename);
+                chat.screen = '/'+req.file.filename;
+            }
+            else
+                chat.screen = 'none';
+
             result.chat.push(chat);
             result.save();
             res.redirect('/edit/'+result._id);

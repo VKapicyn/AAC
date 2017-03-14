@@ -45,3 +45,19 @@ function status(){
     }
     document.getElementById('_status').style="display:none"
 }
+
+function validate_form ( )
+{
+	valid = true;
+
+        if ( document.contact_form.source_company.value == "" ||
+             document.contact_form.page.value == "" ||
+             document.contact_form.chat.value == ""
+           )
+        {
+                alert ( "Пожалуйста заполните dсе необходимые поля" );
+                valid = false;
+        }
+
+        return valid;
+}

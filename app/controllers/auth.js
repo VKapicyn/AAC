@@ -12,8 +12,11 @@ exports.createUser = function(req, res){
     let user = {};
     user.username = req.body.username;
     user.password = req.body.password;
+    user.email = req.body.email;
+    user.alerts = req.body.alerts;
+    console.log(req.body);
     user = authModel.createUser(user);
-    res.send('new user '+user);
+    res.send('new user '+user.email);
 }
 
 exports.createAdmin = function(req, res){

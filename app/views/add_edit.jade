@@ -7,24 +7,36 @@ if (session.admin)
         .row
             .col-md-12
                 include includes/header  
-            .col-md-12
+            .col-md-8
                 a(href='/main')
                     | <-- На главную
                 br
                 br
-                form(method='post', action='/edit/add', enctype='multipart/form-data')
+                form(method='post', action='/edit/add', enctype='multipart/form-data', name='contact_form', onsubmit='return validate_form();')
                     | Получатель 
                     select(name='recipient')
                         -for(var i=0; i<users.length; i++)
                             option #{users[i].username}
+                    span(class='zvezdockha') *
                     br
-                    input(type='text', name='source_company', placeholder='Источник')
+                    input(type='text', name='source_company', placeholder='Источник', title='Название подразделения') 
+                    span(class='zvezdockha') *
                     br
-                    input(type='text', name='page', placeholder='Страницы')
+                    input(type='text', name='page', placeholder='Страницы') 
+                    span(class='zvezdockha') *
                     br
                     textarea(name='comment', rows='8', cols='80', placeholder='Фрагмент текста')
                     br
-                    input(type='text', name='chat', placeholder='Комментарий')
+                    textarea(name='chat', rows='4', cols='80', placeholder='Замечание')
+                    span(class='zvezdockha') *
                     br
                     input(type='file', name='screen')                 
                     input(type='submit')
+            .col-md-4
+                //инструкции
+                p
+                    | Инструкции по заполнению
+            .col-md-12
+                p
+                    | Добавляя скриншот и фрагмент текста, вы существенно ускоряете процесс исправления замечания.
+    script(src='/js/editFront.js')

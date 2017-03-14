@@ -50,7 +50,7 @@ if (session.admin || session.user)
                                 button(type='input', class='page', style='display:none') Отправить
                             a(onclick='page()', id='_page') редактировать
                     tr
-                        td Комментарий
+                        td Фрагмент текста
                         td #{result.comment}
                         td
                             form(action='/edit/comment/#{result._id}', method='POST')
@@ -109,14 +109,22 @@ if (session.admin || session.user)
                                 b 
                                     | #{result.chat[i].author},  #{result.chat[i].date}
                                 br    
-                                | #{result.chat[i].message}  
+                                | #{result.chat[i].message} 
+                                if  (result.chat[i].screen != 'none')
+                                    br
+                                    a(href='/img#{result.chat[i].screen}' target='_blank')
+                                        img(src='/img#{result.chat[i].screen}' height='50px')
                                 hr
                         -else
                             p(style='background:#F0F5E5')
                                 b 
                                     | #{result.chat[i].author},  #{result.chat[i].date}
                                 br    
-                                | #{result.chat[i].message}  
+                                | #{result.chat[i].message} 
+                                if  (result.chat[i].screen != 'none')
+                                    br
+                                    a(href='/img#{result.chat[i].screen}')
+                                        img(src='/img#{result.chat[i].screen}' height='50px') 
                                 hr
                     -if(session.user)
                         -if(session.user.name == result.chat[i].author)
@@ -125,6 +133,10 @@ if (session.admin || session.user)
                                     | #{result.chat[i].author},  #{result.chat[i].date}
                                 br    
                                 | #{result.chat[i].message}  
+                                if  (result.chat[i].screen != 'none')
+                                    br
+                                    a(href='/img#{result.chat[i].screen}')
+                                        img(src='/img#{result.chat[i].screen}' height='50px')
                                 hr
                         -else
                             p(style='background:#F0F5E5')
@@ -132,9 +144,14 @@ if (session.admin || session.user)
                                     | #{result.chat[i].author},  #{result.chat[i].date}
                                 br    
                                 | #{result.chat[i].message}  
+                                if  (result.chat[i].screen != 'none')
+                                    br
+                                    a(href='/img#{result.chat[i].screen}')
+                                        img(src='/img#{result.chat[i].screen}' height='50px')
                                 hr
-                form(method='POST', action='/chat/add/#{result._id}')
+                form(method='POST', action='/chat/add/#{result._id}', enctype='multipart/form-data')
                     textarea(name='message', rows='8', cols='80', placeholder='Ваше сообщение')
+                    input(type='file', name='screen2')
                     br
                     button.btn.btn-default(type='input') Отправить   
             .col-md-4
