@@ -61,8 +61,11 @@ if (session.admin || session.user)
                             a(onclick='comment()', id='_comment') редактировать
                     tr
                         td 
-                            a(href='/img#{result.screen}', target='_blank')
-                                img(src='/img#{result.screen}', height='200px')
+                            if ((result.screen != 'none') && (result.screen != undefined))
+                                a(href='/img#{result.screen}', target='_blank')
+                                    img(src='/img#{result.screen}', height='200px')
+                            else
+                                | Скриншот отсутсвует
                         td
                         td
                             form(action='/edit/screen/#{result._id}', method='POST', enctype='multipart/form-data')
@@ -110,7 +113,7 @@ if (session.admin || session.user)
                                     | #{result.chat[i].author},  #{result.chat[i].date}
                                 br    
                                 | #{result.chat[i].message} 
-                                if  (result.chat[i].screen != 'none')
+                                if  ((result.chat[i].screen != 'none') && (result.chat[i].screen))
                                     br
                                     a(href='/img#{result.chat[i].screen}' target='_blank')
                                         img(src='/img#{result.chat[i].screen}' height='50px')
@@ -121,7 +124,7 @@ if (session.admin || session.user)
                                     | #{result.chat[i].author},  #{result.chat[i].date}
                                 br    
                                 | #{result.chat[i].message} 
-                                if  (result.chat[i].screen != 'none')
+                                if  ((result.chat[i].screen != 'none') && (result.chat[i].screen))
                                     br
                                     a(href='/img#{result.chat[i].screen}')
                                         img(src='/img#{result.chat[i].screen}' height='50px') 
@@ -133,7 +136,7 @@ if (session.admin || session.user)
                                     | #{result.chat[i].author},  #{result.chat[i].date}
                                 br    
                                 | #{result.chat[i].message}  
-                                if  (result.chat[i].screen != 'none')
+                                if  ((result.chat[i].screen != 'none') && (result.chat[i].screen))
                                     br
                                     a(href='/img#{result.chat[i].screen}')
                                         img(src='/img#{result.chat[i].screen}' height='50px')
@@ -144,7 +147,7 @@ if (session.admin || session.user)
                                     | #{result.chat[i].author},  #{result.chat[i].date}
                                 br    
                                 | #{result.chat[i].message}  
-                                if  (result.chat[i].screen != 'none')
+                                if  ((result.chat[i].screen != 'none') && (result.chat[i].screen))
                                     br
                                     a(href='/img#{result.chat[i].screen}')
                                         img(src='/img#{result.chat[i].screen}' height='50px')

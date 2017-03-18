@@ -38,7 +38,7 @@ function getSearch(){
             else
                 _accept_date = '';
 
-            tableContent += '<th scope="row"> <a href="/edit/'+data[i]._id+'">'+(Number(i)+1)+' </a>';
+            tableContent += '<th scope="row"> <a href="/edit/'+data[i]._id+'">'+(Number(i)*page + 1)+' </a>';
             tableContent += '<td>'+_date_add+'</td>';
             tableContent += '<td>'+data[i].recipient+'</td>';
             tableContent += '<td>'+data[i].source_company+'</td>';
@@ -74,30 +74,36 @@ function getSearch(){
 
 function getURL(){
     let source = document.getElementById('search-input').value==''?'null':document.getElementById('search-input').value;
+    let s_page = document.getElementById('page-input').value==''?'null':document.getElementById('page-input').value;
 
-    let url = '/search/'+status+'/'+source+'/'+page+'/'+sort+'/'+amount;
+    let url = '/search/'+status+'/'+source+'/'+page+'/'+sort+'/'+amount+'/'+s_page;
     return url;
 }
 
 function sortPages(){
+    page = 1;
     sort = 'pages';
     getSearch();
 }
 
 function sortSource(){
+    page = 1;
     sort = 'source';
     getSearch();
 }
 
 function sortDate(){
+    page = 1;
     sort = 'date';
     getSearch();
 }
 
 function getDefault(){
+    page = 1;
     status = 'all';
     sort = 'date'
     document.getElementById('search-input').value = '';
+    document.getElementById('page-input').value = '';
     getSearch();
 }
 
@@ -127,16 +133,19 @@ function endPage(){
 }
 
 function vneseni(){
+    page = 1;
     status = 'vneseni';
     getSearch();
 }
 
 function ne_vneseni(){
+    page = 1;
     status = 'ne_vneseni';
     getSearch();
 }
 
 function rassmotrenie(){
+    page = 1;
     status = 'rassmotrenie';
     getSearch();
 }

@@ -1,8 +1,8 @@
 var login = require('../config').dbLogin;
 var pass = require('../config').dbPass;
 var adress = require('../config').dbIp;
-var url = 'mongodb://'+login+':'+pass+'@'+adress;
-//var url = 'mongodb://localhost:27017/ERIO';
+//var url = 'mongodb://'+login+':'+pass+'@'+adress;
+var url = 'mongodb://localhost:27017/ERIO';
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 var db = mongoose.connect(url)

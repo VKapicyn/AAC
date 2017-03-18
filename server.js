@@ -60,7 +60,7 @@ app.get('/edit/:id/:subid', require('./app/controllers/db-files').getComment)
 
 //--------------------
 
-app.get('/search/:status/:source/:page/:sort/:amount', require('./app/controllers/rest').getSearch);
+app.get('/search/:status/:source/:page/:sort/:amount/:s_page', require('./app/controllers/rest').getSearch);
 
 app.listen(require('./app/config.js').port);
 console.log('Server started!');                                                                                                                                                              

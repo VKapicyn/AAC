@@ -12,7 +12,7 @@ var server 	= require('emailjs/email').server.connect({
 
 exports.editPage = function(req, res){
     if (req.session.admin)
-        editModel.find().then(function(result){
+        editModel.find({sender: req.session.admin.name}).then(function(result){
             let vneseni=0,  ne_vneseni=0, rassmotrenie=0;
             for(let i=0; i<result.length; i++){
                 switch(result[i].status){

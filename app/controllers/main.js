@@ -5,7 +5,7 @@ exports.mainPage = function(req, res){
     let vneseni = 0,  ne_vneseni = 0, rassmotrenie = 0;
     if(req.session.user || req.session.admin){
         if(req.session.admin)
-            editModel.find().then(function(result){
+            editModel.find({sender: req.session.admin.name}).then(function(result){
                 for(let i=0; i<result.length; i++){
                     switch(result[i].status){
                         case 0:

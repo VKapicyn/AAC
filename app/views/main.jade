@@ -23,6 +23,9 @@ if (session.admin || session.user)
                     .input-append
                         input(type='text', class='span2 search-query', placeholder='Источник', id='search-input')
                     br
+                    .input-append
+                        input(type='text', class='span2 search-query', placeholder='Страница', id='page-input')
+                    br
                     button.btn.btn-default(onclick='getSearch()') Поиск
                     | &nbsp &nbsp
                     button.btn.btn-default(onclick='getDefault()') Сброс

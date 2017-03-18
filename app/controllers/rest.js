@@ -7,11 +7,19 @@ exports.getSearch = function(req, res){
     let source = req.params.source;
     let pages = req.params.page;
     let amount = req.params.amount;
-
-    let query = editModel.find();
+    let s_page = req.params.s_page;
+    let query;
+    
+    if (req.session.admin) 
+        query = editModel.find({sender: req.session.admin.name});
+    else
+        query = editModel.find({recipient: req.session.user.name});
 
     if(source!='null')
         query.where({source_company: {$regex: source, $options:'i'}});
+
+    if(s_page!='null')
+        query.where({page: {$regex: s_page, $options:'i'}});
     
     switch(status){
         case 'vneseni' : query.where({status: 1});
