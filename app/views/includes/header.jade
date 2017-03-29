@@ -8,12 +8,14 @@
                     a(href='#' onclick='ne_vneseni()') #{ne_vneseni}
                 li На рассмотрении 
                     a(href='#' onclick='rassmotrenie()') #{rassmotrenie}
-        .col-md-2
+        .col-md-3
             if (session.admin)
                 .p
                     | #{session.admin.name}, Администратор
+                input(id='user_type', style='display:none', value='admin')
             if (session.user)
                 .p
                     | #{session.user.name}, Пользователь
-        .col-md-5(align='right')
+                input(id='user_type', style='display:none', value='user')
+        .col-md-4(align='right')
             a(href='/logout') Выйти

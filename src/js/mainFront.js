@@ -40,7 +40,10 @@ function getSearch(){
 
             tableContent += '<th scope="row"> <a href="/edit/'+data[i]._id+'">'+(Number(i)+amount*(page-1) + 1)+' </a>';
             tableContent += '<td>'+_date_add+'</td>';
-            tableContent += '<td>'+data[i].recipient+'</td>';
+            if (document.getElementById('user_type').value == 'admin')
+                tableContent += '<td>'+data[i].recipient+'</td>';
+            else
+                tableContent += '<td>'+data[i].sender+'</td>';
             tableContent += '<td>'+data[i].source_company+'</td>';
             tableContent += '<td>'+data[i].page+'</td>';
             tableContent += '<td>'+_accept_date+'</td>';

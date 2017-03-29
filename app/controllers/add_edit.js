@@ -45,7 +45,7 @@ exports.editAdd = function(req, res){
     if (req.session.admin){
         var edit = new editModel;
         edit.sender = req.session.admin.name;
-        edit.recipient = req.body.recipient;
+        edit.recipient = 'Da-strateg';
         edit.add_date = new Date();
         edit.source_company = req.body.source_company;
         edit.page = req.body.page;

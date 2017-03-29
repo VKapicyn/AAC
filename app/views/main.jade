@@ -35,8 +35,6 @@ if (session.admin || session.user)
                 if (session.admin)
                     form(action='/add_edit')
                         button.btn.btn-success.btn-mine Добавить правку
-                    p 
-                        | Пояснения к статусу
             .col-md-9
                 table.table
                     thead.thead-inverse
@@ -44,7 +42,10 @@ if (session.admin || session.user)
                         th #
                         th 
                             a(href='#' onclick='sortDate()') Добавлена
-                        th Исполнитель
+                        - if(session.admin)
+                            th Исполнитель
+                        - if(session.user)
+                            th Отправитель
                         th 
                             a(href='#' onclick='sortSource()') Источник
                         th 
