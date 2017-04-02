@@ -60,11 +60,12 @@ function getSearch(){
         if(!(page==1 && j<amount)){
             let tableContent = '<span class="output"> Навигация';
             if (page>1){
-                tableContent +=  '<a href="#" onclick="startPage()">'+'<<&nbsp;&nbsp;'+'</a>';   
+                tableContent +=  '<a href="#" onclick="startPage()">'+'&nbsp;<<&nbsp;&nbsp;'+'</a>';   
                 tableContent +=  '<a href="#" onclick="prevPage()">'+'Назад'+'</a>';
             }
-            tableContent +=  '<span style="color:brown">&nbsp;'+page+'&nbsp;</span>';
-            if (amount<=j){   
+            let pages = Math.ceil(size/amount);
+            tableContent +=  '<span style="color:brown">&nbsp;'+page+'&nbsp;из&nbsp;'+pages+'&nbsp</span>';
+            if (page<pages){   
                 tableContent +=  '<a href="#" onclick="nextPage()">'+'Вперед'+'</a>';
                 tableContent +=  '<a href="#" onclick="endPage()">'+'&nbsp;&nbsp;>>'+'</a>';
             } 

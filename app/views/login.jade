@@ -1,14 +1,30 @@
-h3 Login
-form(method='post', action='/user/login')
-    input(type='text', name='username')
-    input(type='password', name='password')
-    input(type='submit')
+html
+    include includes/head
+    title Главная
+body
+    .container
+        .row
+            .col-md-4
+            .col-md-4
+                br
+                br
+                .search-block    
+                    center      
+                        h3 Авторизуйтесь
+                    form(method='post', action='/user/login')
+                        center
+                            input(type='text', name='username', placeholder='Логин')
+                            br
+                            input(type='password', name='password', placeholder='Пароль')
+                            br
+                            br
+                            input(type='submit' class="btn btn-success btn-mine")
 
-h3 Logout
-a(href='/logout') logout
-br
+                    //h3 Logout
+                    //a(href='/logout') logout
+                    br
 
-if (user.user)
-    | test user
-if (user.admin)
-    | test admin
+                    if (user.user)
+                        | test user
+                    if (user.admin)
+                        | test admin

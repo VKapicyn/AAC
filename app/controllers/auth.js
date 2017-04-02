@@ -16,7 +16,7 @@ exports.createUser = function(req, res){
     user.alerts = req.body.alerts;
     console.log(req.body);
     user = authModel.createUser(user);
-    res.send('new user '+user.email);
+    res.send('Зарегестрирован ' + user.username);
 }
 
 exports.createAdmin = function(req, res){
@@ -25,11 +25,11 @@ exports.createAdmin = function(req, res){
     admin.password = req.body.password;
     console.log(req.body.username, req.body.password);
     admin = authModel.createAdmin(admin);
-    res.send('new admin ' + admin);
+    res.send('Зарегестрирован ' + admin.username);
 }
 
 exports.createPage = function(req, res){
-    if(req.session.admin)
+    if(req.session.user)
         res.render('create')
     else
         res.send('Авторизуйтесь как администратор')
